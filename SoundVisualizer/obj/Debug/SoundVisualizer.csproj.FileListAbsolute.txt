@@ -1,0 +1,14 @@
+D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\bin\Debug\SoundVisualizer.exe.config
+D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\bin\Debug\SoundVisualizer.exe
+D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\bin\Debug\SoundVisualizer.pdb
+D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\obj\Debug\MainWindow.baml
+D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\obj\Debug\MainWindow.g.cs
+D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\obj\Debug\App.g.cs
+D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\obj\Debug\SoundVisualizer_MarkupCompile.cache
+D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\obj\Debug\SoundVisualizer.g.resources
+D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\obj\Debug\SoundVisualizer.Properties.Resources.resources
+D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\obj\Debug\SoundVisualizer.csproj.GenerateResource.Cache
+D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\obj\Debug\SoundVisualizer.exe
+D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\obj\Debug\SoundVisualizer.pdb
+D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\obj\Debug\SoundVisualizer.csprojResolveAssemblyReference.cache
+D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\bin\Debug\OpenAL.dll
