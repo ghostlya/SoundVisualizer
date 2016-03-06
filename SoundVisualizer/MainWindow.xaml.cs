@@ -30,7 +30,7 @@ namespace SoundVisualizer
         {
            
             _openOpenAlRecorder = new OpenALRecorder();
-            _openOpenAlRecorder.SetOptions(_openOpenAlRecorder.Devices[1], new AudioQuality(2,8,44100));
+            _openOpenAlRecorder.SetOptions(_openOpenAlRecorder.Devices[0], new AudioQuality(2,8,44100));
             _openOpenAlRecorder.Recorded += openOpenAlRecorder_Recorded;
             _openOpenAlRecorder.Start();
 
