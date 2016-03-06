@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Media.Imaging;
 using SoundVisualizer.Audio;
-using SoundVisualizer.ProcessingAudio;
 using SoundVisualizer.Recorder;
 using SoundVisualizer.Visualization;
 
@@ -14,12 +12,9 @@ namespace SoundVisualizer
     /// </summary>
     public partial class MainWindow : Window
     {
-        private System.Windows.Threading.DispatcherTimer _timer;
-        private BitmapImage bitmapImage;
-        private OpenALRecorder openOpenAlRecorder;
+        private readonly System.Windows.Threading.DispatcherTimer _timer;
+        private OpenALRecorder _openOpenAlRecorder;
         private float[] _data;
-
-        private int count = 0;
         public MainWindow()
         {
             
@@ -28,16 +23,16 @@ namespace SoundVisualizer
             _timer = new System.Windows.Threading.DispatcherTimer();
 
             _timer.Tick += new EventHandler(TimerTick);
-            _timer.Interval = new TimeSpan(0, 0, 0, 0, 90);
+            _timer.Interval = new TimeSpan(0, 0, 0, 0, 68);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
            
-            openOpenAlRecorder = new OpenALRecorder();
-            openOpenAlRecorder.SetOptions(openOpenAlRecorder.Devices[0], new AudioQuality(2,8,44100));
-            openOpenAlRecorder.Recorded += openOpenAlRecorder_Recorded;
-            openOpenAlRecorder.Start();
+            _openOpenAlRecorder = new OpenALRecorder();
+            _openOpenAlRecorder.SetOptions(_openOpenAlRecorder.Devices[1], new AudioQuality(2,8,44100));
+            _openOpenAlRecorder.Recorded += openOpenAlRecorder_Recorded;
+            _openOpenAlRecorder.Start();
 
             _timer.Start();
            
@@ -46,25 +41,25 @@ namespace SoundVisualizer
         void openOpenAlRecorder_Recorded(object sender, RecordedEventArgs e)
         {
 
-            _data = new float[256];
+            _data = new float[512];
+            
             for (int i = 0; i < _data.Length; i ++)
             {
-                _data[i] = e.Data[i*2];
+                _data[i] = e.Data[i];
+
             }
- 
+            
         }
 
 
         private void TimerTick(object sender, EventArgs e)
         {
-            float[] fft = new float[_data.Length];
-            FFT.Forward(_data, fft);
-            image.Source = new Graph().PaintGraph((int)image.Width, (int)image.Height, _data);
+           image.Source = new Graph().Drawing((int)image.Width, (int)image.Height, _data);
         }
 
         private void stop_Click(object sender, RoutedEventArgs e)
         {
-            openOpenAlRecorder.Stop();
+            _openOpenAlRecorder.Stop();
             _timer.Stop();
         }
 

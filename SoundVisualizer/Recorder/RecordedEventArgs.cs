@@ -3,7 +3,7 @@
 
 namespace SoundVisualizer.Recorder
 {
-    [Serializable]
+    
     public class RecordedEventArgs : EventArgs
     {
         public RecordedEventArgs(byte[] data, int availableData, int channels, int bits, int frequency)

@@ -1,59 +1,93 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 using System.Windows.Media;
+using SoundVisualizer.ProcessingAudio;
 using Brushes = System.Windows.Media.Brushes;
 using Pen = System.Windows.Media.Pen;
 using Point = System.Windows.Point;
 
 namespace SoundVisualizer.Visualization
 {
-    public class Graph
+    public class Graph : IVisualize
     {
-       
-        private double _scale = 0.1;
+
+        private double _scaleY = 0.1;
+        private double _scaleX = 1;
         private List<Line> _lines = null;
         private int _width;
         private int _height;
-
-        public double Scale
-        {
-            get { return _scale; }
-            set { _scale = value; }
-        }
+        private double _minY;
+        private double _maxY;
 
         public Graph()
         {
             _lines = new List<Line>();
         }
 
-
-
-        protected void InputData(float[] values)
+        private void InputData(float[] values)
         {
-
-            double dist = 1;
-            double x1 = 0, y1 = 0;
-            double x2 = 0, y2 = 0;
-            bool flagFirst = true;
-            
+            Complex[] a = new Complex[values.Length];
 
             for (int i = 0; i < values.Length; i++)
             {
- 
-                if (flagFirst)
+                a[i] = values[i];
+            }
+            Complex[] fft = FFT.Fft(a);
+
+            double[] x = new double[fft.Length / 4];
+
+            for (int i = 0; i < x.Length; i++)
+            {
+                x[i] = fft[i].Real;
+            }
+
+
+            _maxY = x.Max();
+            _minY = x.Min();
+
+            CreateLines(x);
+        }
+
+        private void CalculatуScale(int count)
+        {
+            _scaleY = _height / (_maxY - _minY) * 5;
+            _scaleX = _width / (count + 1);
+        }
+
+
+        protected void CreateLines(double[] values)
+        {
+            CalculatуScale(values.Length);
+
+            double x1 = 0, y1 = 0;
+            double x2 = 0, y2 = 0;
+
+            double tempVal = 0;
+            var tempLine = new Line();
+
+            for (int i = 1; i < values.Length; i++)
+            {
+
+                tempVal = (values[i] * _scaleY);
+
+                if (tempVal < 0)
                 {
-                    y1 = (_height - values[i] * _scale);
-                    i++;
-                    flagFirst = false;
+                    tempVal = 0;
                 }
 
-                x2 = x1 + dist;
-                y2 = (_height - values[i] * _scale);
+                if (tempVal > _height)
+                {
+                    tempVal = _height;
+                }
 
-                
+                x2 = x1 + 2;
+                y2 = tempVal;
 
-                var tempLine = new Line ();
-                tempLine.Point1 = new Point(x1, y1);
-                tempLine.Point2 = new Point(x2, y2);
+                tempLine = new Line();
+
+                tempLine.Point1 = new Point(x1 * _scaleX, y1);
+                tempLine.Point2 = new Point(x2 * _scaleX, y2);
 
                 _lines.Add(tempLine);
 
@@ -61,14 +95,17 @@ namespace SoundVisualizer.Visualization
                 y1 = y2;
 
             }
+
+            tempLine = new Line();
+
+            tempLine.Point1 = new Point(x1 * _scaleX, y1);
+            tempLine.Point2 = new Point(x2 * _scaleX, 0);
+            _lines.Add(tempLine);
+
         }
 
-        /// <summary>
-        /// Paint.
-        /// </summary>
-        /// <param name="w"></param>
-        /// <param name="h"></param>
-        public DrawingImage PaintGraph(int width, int height, float[] values)
+
+        public DrawingImage Drawing(int width, int height, float[] values)
         {
             _width = width;
             _height = height;
@@ -88,30 +125,31 @@ namespace SoundVisualizer.Visualization
             return new DrawingImage(drawingVisual.Drawing);
         }
 
+
     }
 
-     class Line
-     {
-         private Pen _pen = new Pen(Brushes.Green, 1);
-         private Point _point1;
-         private Point __point2;
+    class Line
+    {
+        private Pen _pen = new Pen(Brushes.Green, 1);
+        private Point _point1;
+        private Point __point2;
 
-         public Pen Pen
-         {
-             get { return _pen; }
-             set { _pen = value; }
-         }
+        public Pen Pen
+        {
+            get { return _pen; }
+            set { _pen = value; }
+        }
 
-         public Point Point1
-         {
-             get { return _point1; }
-             set { _point1 = value; }
-         }
+        public Point Point1
+        {
+            get { return _point1; }
+            set { _point1 = value; }
+        }
 
-         public Point Point2
-         {
-             get { return __point2; }
-             set { __point2 = value; }
-         }
-     }
+        public Point Point2
+        {
+            get { return __point2; }
+            set { __point2 = value; }
+        }
+    }
 }

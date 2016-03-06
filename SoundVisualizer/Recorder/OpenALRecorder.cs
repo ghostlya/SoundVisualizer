@@ -7,11 +7,10 @@ using SoundVisualizer.Audio;
 
 namespace SoundVisualizer.Recorder
 {
-    public sealed class OpenALRecorder :
-       MarshalByRefObject
+    public sealed class OpenALRecorder
     {
 
-        private const int DefaultBufferSize = 8192;
+        private const int DefaultBufferSize = 2048;
 
 
 
@@ -38,7 +37,7 @@ namespace SoundVisualizer.Recorder
 
 
 
-        [SecurityCritical]
+       
         public OpenALRecorder(string deviceName = null)
         {
             if (string.IsNullOrEmpty(deviceName) || IsInited)
@@ -73,7 +72,7 @@ namespace SoundVisualizer.Recorder
 
 
 
-        [SecurityCritical]
+      
         private void Initialize(string deviceName, AudioQuality quality)
         {
             try
@@ -111,7 +110,7 @@ namespace SoundVisualizer.Recorder
             }
         }
 
-        [SecuritySafeCritical]
+        
         public void Start()
         {
             if (capture == null || capture.IsRunning)
@@ -124,7 +123,7 @@ namespace SoundVisualizer.Recorder
             }
         }
 
-        [SecuritySafeCritical]
+       
         public void SetOptions(string deviceName, AudioQuality quality)
         {
             if (IsInited)
@@ -136,7 +135,7 @@ namespace SoundVisualizer.Recorder
             Initialize(deviceName, quality);
         }
 
-        [SecurityCritical]
+       
         private void OnRecording(object state)
         {
             lock (syncObj)
@@ -164,7 +163,7 @@ namespace SoundVisualizer.Recorder
             }
         }
 
-        [SecuritySafeCritical]
+       
         public void Stop()
         {
             if (!IsInited)
@@ -180,7 +179,7 @@ namespace SoundVisualizer.Recorder
             }
         }
 
-        [SecurityCritical]
+       
         private int GetTimerTimeOut()
         {
             double timeToBufferFilled = samplesSize / (quality.Frequency * 1000d);
@@ -189,7 +188,7 @@ namespace SoundVisualizer.Recorder
 
 
 
-        [SecuritySafeCritical]
+        
         public void Dispose()
         {
             if (disposed)
