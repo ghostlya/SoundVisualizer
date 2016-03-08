@@ -10,5 +10,5 @@ D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\obj\Debug\SoundVisual
 D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\obj\Debug\SoundVisualizer.csproj.GenerateResource.Cache
 D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\obj\Debug\SoundVisualizer.exe
 D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\obj\Debug\SoundVisualizer.pdb
-D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\obj\Debug\SoundVisualizer.csprojResolveAssemblyReference.cache
 D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\bin\Debug\OpenAL.dll
+D:\УНИВЕР\5 курс\SoundVisualizer\SoundVisualizer\obj\Debug\SoundVisualizer.csprojResolveAssemblyReference.cache

@@ -1,7 +1,6 @@
 ﻿using OpenAL;
 using System;
 using System.Collections.Generic;
-using System.Security;
 using System.Threading;
 using SoundVisualizer.Audio;
 
@@ -10,7 +9,7 @@ namespace SoundVisualizer.Recorder
     public sealed class OpenALRecorder
     {
 
-        private const int DefaultBufferSize = 2048;
+        private const int DefaultBufferSize = 8192;
 
 
 
@@ -29,9 +28,8 @@ namespace SoundVisualizer.Recorder
 
         public event EventHandler<RecordedEventArgs> Recorded
         {
-            [SecuritySafeCritical]
+            
             add { recorded += value; }
-            [SecuritySafeCritical]
             remove { recorded -= value; }
         }
 
@@ -50,13 +48,11 @@ namespace SoundVisualizer.Recorder
 
         public bool IsInited
         {
-            [SecuritySafeCritical]
             get { return Interlocked.CompareExchange(ref capture, null, null) != null; }
         }
 
         public IList<string> Devices
         {
-            [SecuritySafeCritical]
             get
             {
                 try

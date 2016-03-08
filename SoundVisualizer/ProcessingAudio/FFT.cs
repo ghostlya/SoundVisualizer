@@ -61,5 +61,32 @@ namespace SoundVisualizer.ProcessingAudio
             }
             return X_n;
         }
+
+        /// <summary>
+        /// Реальная часть комплексных чисел
+        /// </summary>
+        public static double[] GetReals(Complex[] complexs)
+        {
+            double[] temp = new double[complexs.Length];
+
+            for (int i = 0; i < complexs.Length; i++)
+            {
+                temp[i] = complexs[i].Real;
+            }
+
+            return temp;
+        }
+
+        public static Complex[] DoubleToComplexs(double[] doubles)
+        {
+            Complex[] complexs = new Complex[doubles.Length];
+
+            for (int i = 0; i < doubles.Length; i++)
+            {
+                complexs[i] = doubles[i];
+            }
+
+            return complexs;
+        }
     }
 }

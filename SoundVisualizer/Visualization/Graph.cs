@@ -14,26 +14,38 @@ namespace SoundVisualizer.Visualization
 
         private double _scaleY = 0.1;
         private double _scaleX = 1;
-        private List<Line> _lines = null;
+        private List<Line> _lines;
+        private Pen _pen;
         private int _width;
         private int _height;
         private double _minY;
         private double _maxY;
+        private double _sensitivity = 5;
+
+        public void SetColor(Color color)
+        {
+            _pen.Brush = new SolidColorBrush(color);
+        }
+
+        public void SetLineThickness(double thickness)
+        {
+            _pen.Thickness = thickness;
+        }
+
+        public void Sensitivity(double sensitivity)
+        {
+            _sensitivity = sensitivity;
+        }
 
         public Graph()
         {
             _lines = new List<Line>();
+            _pen = new Pen(Brushes.Green, 1);
         }
 
-        private void InputData(float[] values)
+        private void InputData(double[] values)
         {
-            Complex[] a = new Complex[values.Length];
-
-            for (int i = 0; i < values.Length; i++)
-            {
-                a[i] = values[i];
-            }
-            Complex[] fft = FFT.Fft(a);
+            Complex[] fft = FFT.Fft(FFT.DoubleToComplexs(values));
 
             double[] x = new double[fft.Length / 4];
 
@@ -51,7 +63,7 @@ namespace SoundVisualizer.Visualization
 
         private void CalculatуScale(int count)
         {
-            _scaleY = _height / (_maxY - _minY) * 5;
+            _scaleY = _height / (_maxY - _minY) * _sensitivity;
             _scaleX = _width / (count + 1);
         }
 
@@ -88,6 +100,7 @@ namespace SoundVisualizer.Visualization
 
                 tempLine.Point1 = new Point(x1 * _scaleX, y1);
                 tempLine.Point2 = new Point(x2 * _scaleX, y2);
+                tempLine.Pen = _pen;
 
                 _lines.Add(tempLine);
 
@@ -100,12 +113,14 @@ namespace SoundVisualizer.Visualization
 
             tempLine.Point1 = new Point(x1 * _scaleX, y1);
             tempLine.Point2 = new Point(x2 * _scaleX, 0);
+            tempLine.Pen = _pen;
+
             _lines.Add(tempLine);
 
         }
 
 
-        public DrawingImage Drawing(int width, int height, float[] values)
+        public DrawingImage Drawing(int width, int height, double[] values)
         {
             _width = width;
             _height = height;
